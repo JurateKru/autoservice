@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ order }} | {{ block.super }}{% endblock title %}
+{% block content %}
+<h2>Order Details</h2>
+<h4>Date: {{ order.date }}
+<br>Plate number: {{ order.car }}</h4>
+<p></p>
+<p>Service description, quantity and price:</p>
+    {% if order.entries.count > 0 %}
+    <ul>
+        {% for entry in order.entries.all %}
+            <li> {{entry.service}}, {{entry.quantity}}, {{entry.price}}</li>
+        {% endfor %}
+    </ul>
+    <ul> Total amount: {{ order.entries.save }}
+    </ul>
+    {% endif %}
+{% endblock content %}

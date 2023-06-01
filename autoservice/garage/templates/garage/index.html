@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Car Service</h1>
+<p>Welcome to cars paradise!</p>
+<p>Garage employment:</p>
+<ul>
+    <li><strong>Count of available services:</strong> {{ service_count }}</li>
+    <li><strong>Count of completed orders:</strong> {{ count_orders }}</li>
+    <li><strong>Count of cars:</strong> {{ count_cars }}</li>
+
+</ul>
+{% endblock content %}

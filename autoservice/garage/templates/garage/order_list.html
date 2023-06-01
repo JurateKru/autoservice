@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Orders in {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Orders</h1>
+<p>Date and plate numer:</p>
+{% if order_list %}
+<ul>
+    {% for order in order_list %}
+        <li><a href="{% url 'order_detail' order.pk %}">{{ order }}</a></li>
+    {% endfor %}
+</ul>
+{% include 'includes/paginator_nav.html' %}
+{% else %}
+<p>No orders found</p>
+{% endif %}
+{% endblock content %}

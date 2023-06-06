@@ -2,17 +2,18 @@
 {% block title %}{{ order }} | {{ block.super }}{% endblock title %}
 {% block content %}
 <h2>Order Details</h2>
-<h4>Date: {{ order.date }}
-<br>Plate number: {{ order.car }}</h4>
-<p></p>
-<p>Service description, quantity and price:</p>
+<br><p><b>Order </b>#{{ order.id }}
+<br><b>Date:</b> {{ order.date }}
+<br><b>Plate number:</b> {{ order.car }}
+<br><b>Due date:</b> {{ order.due_back }}</p>
     {% if order.entries.count > 0 %}
     <ul>
+        <i style="border: 2px solid powderblue">Service description, quantity and price:</i>
+        <p></p>
         {% for entry in order.entries.all %}
-            <li> {{entry.service}}, {{entry.quantity}}, {{entry.price}}</li>
+            <li> {{entry.service}}, {{entry.quantity}} Qty, {{entry.price}} EUR</li>
         {% endfor %}
     </ul>
-    <ul> Total amount: {{ order.entries.save }}
-    </ul>
+    <p><b> Total amount: {{ order.amount }} EUR</b></p>
     {% endif %}
 {% endblock content %}

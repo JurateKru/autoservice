@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
 <h1>Car Service</h1>
-<p>Welcome to cars paradise!</p>
-<p>Garage employment:</p>
+<p style="color:SlateBlue">&#128171; Welcome to cars paradise! &#128171;</p>
 <ul>
-    <li><strong>Count of available services:</strong> {{ service_count }}</li>
-    <li><strong>Count of completed orders:</strong> {{ count_orders }}</li>
-    <li><strong>Count of cars:</strong> {{ count_cars }}</li>
-
+    <i style="border: 2px solid powderblue"><em>Garage employment: </em></i>
+    <p></p>
+    <li><b>Count of available services:</b> {{ service_count }}</li>
+    <li><b>Count of completed orders:</b> {{ count_orders }}</li>
+    <li><b>Count of cars:</b> {{ count_cars }}</li>
+    <p></p>
+    <p>Yuo're visiting this service <strong>{{ num_visits|ordinal}}</strong> time</p>
 </ul>
 {% endblock content %}

@@ -1,7 +1,11 @@
+from django.contrib.auth import get_user_model
+from datetime import date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
-import uuid
+
+
+User = get_user_model()
 
 # Create your models here.
 
@@ -25,7 +29,7 @@ class CarModel(models.Model):
 class Car(models.Model):
     plate_nr = models.CharField(_("plate number"), max_length=50)
     vin = models.CharField(_("VIN"), max_length=50)
-    client = models.CharField(_("client"), max_length=50)
+    # client = models.CharField(_("client"), max_length=50)
     car_model = models.ForeignKey(
         CarModel,
         verbose_name=_("car model"),
@@ -33,6 +37,15 @@ class Car(models.Model):
         null=True,
         related_name='cars') 
     
+    client = models.ForeignKey(
+        User, 
+        verbose_name=_("client"), 
+        on_delete=models.CASCADE,
+        related_name='cars',
+        null=True,
+        blank=True)
+    
+
     class Meta:
         verbose_name = _("car")
         verbose_name_plural = _("cars")
@@ -43,22 +56,40 @@ class Car(models.Model):
     def get_absolute_url(self):
         return reverse("car_detail", kwargs={"pk": self.pk})
     
+    cover = models.ImageField(
+        _("cover"),
+        upload_to='garage/car_covers',
+        null=True,
+        blank=True,
+    )
+    
 class Order(models.Model):
     date = models.DateField(_("date"), auto_now=False, auto_now_add=True)
-    amount = models.DecimalField(_("amount"), max_digits=18, decimal_places=2)
+    # amount = models.DecimalField(_("amount"), max_digits=18, decimal_places=2)
     car = models.ForeignKey(
         Car,
         verbose_name=_("car"), 
         on_delete=models.CASCADE,
-        related_name='orders')   
+        related_name='orders') 
+    due_back = models.DateField(_("due back"), null=True, blank=True, db_index=True)
+
+    @property
+    def client(self):
+        return self.car.client
     
-    # @property
-    # def price(self):
-    #     order_entries = OrderEntry.objects.filter(order=self.id)
-    #     price = 0
-    #     for order_entry in order_entries:
-    #         price += order_entry.price
-    #     return price
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False  
+    
+    @property
+    def amount(self):
+        order_entries = OrderEntry.objects.filter(order=self.id)
+        price = 0
+        for order_entry in order_entries:
+            price += order_entry.price
+        return price
 
     class Meta:
         ordering = ['date', 'id']
@@ -102,7 +133,7 @@ class Service(models.Model):
 
 class OrderEntry(models.Model):
     quantity = models.IntegerField(_("quantity"))
-    price = models.DecimalField(_("price"), max_digits=18, decimal_places=2)
+    # price = models.DecimalField(_("price"), max_digits=18, decimal_places=2)
     service = models.ForeignKey(
         Service,
         verbose_name=_("service"),
@@ -114,9 +145,9 @@ class OrderEntry(models.Model):
         on_delete=models.CASCADE,
         related_name='entries')
     
-    # @property
-    # def price(self):
-    #     return self.quantity * self.service.price
+    @property
+    def price(self):
+        return self.quantity * self.service.price
 
     class Meta:
         verbose_name = _("order entry")

@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} {{ car }} | {{ block.super }} {% endblock title %}
 {% block content %}
 <h1>{{ car.car_model }}</h1>
-<p>Client - {{ car.client }}</p>
-<p>Car number - {{ car.plate_nr}}</p>
-<p>VIN - {{ car.vin }}</p>
+{% if car.cover %}
+    <img class="car-cover" src="{{ car.cover.url }}">
+{% else %}
+    <img class="car-cover" src="{% static 'garage/img/default.png' %}">
+{% endif %}
+<p><b>Client</b> - {{ car.client }}
+<br><b>Car number</b> - {{ car.plate_nr}}
+<br><b>VIN </b>- {{ car.vin }}
+<br><b>Engine </b>- {{ car.car_model.engine }} l
+<br><b>Year</b> - {{ car.car_model.year }}</p>
 {% endblock content %}

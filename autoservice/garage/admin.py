@@ -4,8 +4,8 @@ from . import models
 # Register your models here.
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('plate_nr', 'vin', 'client', 'car_model')
-    list_filter = ('client', 'car_model')
+    list_display = ('plate_nr', 'client', 'vin', 'car_model')
+    list_filter = ( 'car_model', 'client')
     search_fields = ('plate_numer', 'vin')
 
 class CarModelAdmin(admin.ModelAdmin):
@@ -21,7 +21,7 @@ class OrderEntryAdmin(admin.ModelAdmin):
     list_display = ('quantity', 'price', 'service', 'order')
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('date', 'amount')
+    list_display = ('date', 'amount', 'client', 'due_back')
     inlines = [OrderEntryInline]
 
 class ServiceAdmin(admin.ModelAdmin):

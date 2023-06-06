@@ -2,9 +2,12 @@
 {% block title %}Orders in {{ block.super }}{% endblock title %}
 {% block content %}
 <h1>Orders</h1>
-<p>Date and plate numer:</p>
+{% include 'includes/search.html' %}
 {% if order_list %}
+{% include 'includes/paginator_pages.html' %}
 <ul>
+    <i style="border: 2px solid powderblue">Date and plate number:</i>
+    <p></p>
     {% for order in order_list %}
         <li><a href="{% url 'order_detail' order.pk %}">{{ order }}</a></li>
     {% endfor %}

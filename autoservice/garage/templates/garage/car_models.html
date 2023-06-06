@@ -2,9 +2,22 @@
 {% block title %}Car models in {{ block.super }}{% endblock title %}
 {% block content %}
 <h1>Car Models</h1>
+{% include 'includes/search.html' %}
+{% if car_model_list %}
+{% with car_model_list as page_obj %}
+    {% include 'includes/paginator_pages.html' %}
+{% endwith %}
 <ul>
+    <i style="border: 2px solid powderblue"><em>Car make and model: </em></i>
+    <p></p>
     {% for car in car_model_list %}
         <li><a href="{% url 'car_detail' car.pk%}">{{ car.car_model }}</a></li>
     {% endfor %}
 </ul>
+{% with car_model_list as page_obj %}
+    {% include 'includes/paginator_nav.html' %}
+{% endwith %}
+{% else %}
+    <p>No cars found</p>
+{% endif %}
 {% endblock content %}

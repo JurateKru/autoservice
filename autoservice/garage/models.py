@@ -3,6 +3,7 @@ from datetime import date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from tinymce.models import HTMLField
 
 
 User = get_user_model()
@@ -29,7 +30,7 @@ class CarModel(models.Model):
 class Car(models.Model):
     plate_nr = models.CharField(_("plate number"), max_length=50)
     vin = models.CharField(_("VIN"), max_length=50)
-    # client = models.CharField(_("client"), max_length=50)
+    notes = HTMLField(_("notes"), max_length=8000, blank=True, null=True)
     car_model = models.ForeignKey(
         CarModel,
         verbose_name=_("car model"),

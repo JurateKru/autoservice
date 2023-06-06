@@ -15,5 +15,8 @@
         {% endfor %}
     </ul>
     <p><b> Total amount: {{ order.amount }} EUR</b></p>
+    <hr>
+    <ul><small><b>Notes:</b><br>{{ order.car.notes|safe }}</small></ul>
+    <hr>
     {% endif %}
 {% endblock content %}

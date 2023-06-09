@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Create new order {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Create new order<br>fill in necessary fields</h1>
+<form method="post" action="{{ request.path }}?order_id={{ order.id }}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Confirm your order</button>
+</form>
+{% endblock content %}
+

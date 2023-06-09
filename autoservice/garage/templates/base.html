@@ -16,13 +16,13 @@
         <li><a href="{% url 'car_model_list'%}">Car Models</a></li>
         <li><a href="{% url 'order_list' %}">Oders</a></li>
         {% if user.is_authenticated %}
-            <li class="user">
-                &#128100; {{ user.username }}
-            </li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'user_car_list' %}">Create Order</a></li>
             <li><a href="{% url 'user_orders' %}">My Orders</a></li>
+            <li><a href="{% url 'profile' %}">&#128100; {{ user.get_username }}</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+            <li><a href="{% url 'signup' %}">Sign up</a></li>
         {% endif %}
         {% if user.is_authenticated %}
             {% if user.is_staff or user.is_superuser %}
@@ -31,8 +31,14 @@
         {% endif %}
     </ul>
 </header>
-<main>{% block content %}
-{% endblock content %}</main>
+<main>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="box box-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% block content %}
+    {% endblock content %}</main>
 <footer>
     <p>Contact us: info@garage.com </p>
     <p>&copy; 2023 </p>

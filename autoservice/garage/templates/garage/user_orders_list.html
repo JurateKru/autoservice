@@ -13,6 +13,7 @@
             </li>
         {% endfor %}
     </ul>
+   <p><a class="button" href="{% url 'user_car_list' %}?order_id={{ order.id }}">Create a new order</a></p> 
 {% else %}
 <p class="box box-warning">No orders on this account</p>
 {% endif %}

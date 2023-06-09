@@ -8,9 +8,9 @@
 {% else %}
     <img class="car-cover" src="{% static 'garage/img/default.png' %}">
 {% endif %}
-<p><b>Client</b> - {{ car.client }}
+<li><b>Client</b> - {{ car.client }}
 <br><b>Car number</b> - {{ car.plate_nr}}
 <br><b>VIN </b>- {{ car.vin }}
 <br><b>Engine </b>- {{ car.car_model.engine }} l
-<br><b>Year</b> - {{ car.car_model.year }}</p>
+<br><b>Year</b> - {{ car.car_model.year }}</li>
 {% endblock content %}

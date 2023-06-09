@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}My Cars {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Please, select a car from your car list</h1>
+{% if car_list %}
+<ul>
+    {% for car in car_list %}
+        {% if car.cover %}
+            <img class="car-cover" src="{{ car.cover.url }}">
+        {% else %}
+            <img class="car-cover" src="{% static 'garage/img/default.png' %}">
+        {% endif %}
+        <li><b>Car number</b> - <a href="{% url 'order_create' %}?car_id={{ car.id }}">{{ car.plate_nr }}</a>
+        <br><b>VIN </b>- {{ car.vin }}
+        <br><b>Engine </b>- {{ car.car_model.engine }} l
+        <br><b>Year</b> - {{ car.car_model.year }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="box box-warning">No cars found</p>
+{% endif %}
+{% endblock content %}

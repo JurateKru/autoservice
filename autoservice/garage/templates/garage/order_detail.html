@@ -6,17 +6,41 @@
 <br><b>Date:</b> {{ order.date }}
 <br><b>Plate number:</b> {{ order.car }}
 <br><b>Due date:</b> {{ order.due_back }}</p>
-    {% if order.entries.count > 0 %}
-    <ul>
-        <i style="border: 2px solid powderblue">Service description, quantity and price:</i>
-        <p></p>
-        {% for entry in order.entries.all %}
-            <li> {{entry.service}}, {{entry.quantity}} Qty, {{entry.price}} EUR</li>
-        {% endfor %}
-    </ul>
-    <p><b> Total amount: {{ order.amount }} EUR</b></p>
-    <hr>
-    <ul><small><b>Notes:</b><br>{{ order.car.notes|safe }}</small></ul>
-    <hr>
+{% if order.entries.count > 0 %}
+<ul>
+    <i style="border: 2px solid powderblue">Service description, quantity and price:</i>
+    <p></p>
+    {% for entry in order.entries.all %}
+        <li> {{entry.service}}, {{entry.quantity}} Qty, {{entry.price}} EUR</li>
+    {% endfor %}
+</ul>
+<p><b> Total amount: {{ order.amount }} EUR</b></p>
+<hr>
+<ul><small><b>Notes:</b><br>{{ order.car.notes|safe }}</small></ul>
+<hr>
+<h3>Comments</h3>
+{% if user.is_superuser or user.is_staff or user == order.car.client %}
+    <form method="post" action="{{ request.path }}">
+    <h4>Leave your review</h4>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post</button>
+    </form>
+{% else %}
+    <p class="box box-info">If you want to post a review, you have to <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">sing up</a></p>
+{% endif %}
+    {% if order.reviews.count > 0 %}
+        <ul>
+            {% for review in order.reviews.all  %}
+            <li>{{ review.reviewed_at}} Commented by <a href="{% url 'profile' review.reviewer.id %}">
+                {% if review.reviewer.profile.picture %}
+                    <img src="{{ review.reviewer.profile.picture.url }}" class="user-avatar">
+                {% endif %}
+                {{ review.reviewer }}</a><br>
+                {{ review.content}}
+            </li>
+            {% endfor %}
+        </ul>
     {% endif %}
+{% endif %}
 {% endblock content %}

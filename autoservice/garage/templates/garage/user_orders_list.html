@@ -3,17 +3,24 @@
 {% block content %}
 <h1>My service orders</h1>
 {% if order_list %}
+{% include 'includes/paginator_pages.html' %}
     <ul>
         {% for order in order_list %}
             <li class="order-status-{{ order.status }}">
+            {% if order.status == 0 or order.status == 2 %}
+                <a class="button box-success" href="{% url 'order_delete' order.pk %}">Delete</a>
+            {% endif %}
                 <span class="order-id">Order #{{ order.id }}</span>
                 <a href="{% url 'order_detail' order.pk %}">{{ order.date }}</a>
                 , <em>Status</em> - {{ order.get_status_display }}{% if order.due_back %}. Complete till - <ins>{{ order.due_back }}</ins>{% endif %}
-                {% if order.status <= 2 and order.is_overdue %}<span class="order-overdue">OVERDUE!</span>{% endif %}
+                {% if order.status <= 2 and order.is_overdue %}<span class="order-overdue">OVERDUE!</span>{% endif %}<br>
             </li>
+
         {% endfor %}
     </ul>
-   <p><a class="button" href="{% url 'user_car_list' %}?order_id={{ order.id }}">Create a new order</a></p> 
+{% include 'includes/paginator_nav.html' %}
+<p></p>
+<p><a class="button" href="{% url 'user_car_list' %}?order_id={{ order.id }}">Create a new order</a></p> 
 {% else %}
 <p class="box box-warning">No orders on this account</p>
 {% endif %}

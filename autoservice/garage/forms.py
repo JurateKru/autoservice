@@ -26,7 +26,10 @@ class OrderForm(forms.ModelForm):
         }
 
 
-class CarForm(forms.ModelForm):
+class CarCreateForm(forms.ModelForm):
     class Meta:
         model = models.Car
-        fields = ('plate_nr', 'vin', 'car_model')
+        fields =('car_model', 'plate_nr', 'vin', 'client', 'cover')
+        widgets = {
+            'client': forms.HiddenInput(),
+        }

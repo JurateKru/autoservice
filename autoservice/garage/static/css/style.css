@@ -76,7 +76,7 @@ form {
     padding: 0.6rem
 }
 img.car-cover {
-    max-width: 40%;
+    max-width: 16vw;
     margin: 0 0.5rem;
     border: 2px solid #000;
 }
@@ -85,7 +85,7 @@ ul.car-list {
     flex-direction: row;
     flex-wrap: wrap;
     list-style: none;
-    gap: 0.5rem;
+    gap: 2rem;
     padding-inline-start: 0;
 }
 a:hover {
@@ -136,15 +136,19 @@ img.user-avatar{
     max-height: 1.5rem;
     border-radius: 0.5rem;
 }
-a.button {
-    padding: 0 0.5rem;
-    margin: 0 0.5rem;
+a.button, button {
+    padding: 0.2rem 0.5rem;
+    margin: 1rem 1rem;
     border: 1px solid #999999;
     background-color: #eeeeee;
     border-radius: 0.5rem;
     text-decoration: none;
     font-size: large;
 }
-a.button:hover {
+a.button:hover, button:hover {
     background-color: #f8fff0;
+}
+ul.car-list {
+    gap: 6rem;
+    padding-inline-start: 3rem;
 }

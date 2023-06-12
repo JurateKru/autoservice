@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Delete order {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Confirm Order Deleting </h1>
+<p><b>Order </b>#{{ order.id }}
+<br><b>Date:</b> {{ order.date }}
+<br><b>Plate number:</b> {{ order.car }}
+<br><b>Due date:</b> {{ order.due_back }}</p>
+<form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <h3>Delete?</h3>
+    <button type="submit">Yes</button>
+    <a class="button" href="{% url 'user_orders' %}">No</a>
+</form>
+{% endblock content %}

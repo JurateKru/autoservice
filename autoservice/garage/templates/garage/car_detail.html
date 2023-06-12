@@ -8,9 +8,14 @@
 {% else %}
     <img class="car-cover" src="{% static 'garage/img/default.png' %}">
 {% endif %}
-<li><b>Client</b> - {{ car.client }}
-<br><b>Car number</b> - {{ car.plate_nr}}
-<br><b>VIN </b>- {{ car.vin }}
-<br><b>Engine </b>- {{ car.car_model.engine }} l
-<br><b>Year</b> - {{ car.car_model.year }}</li>
+<ul>
+    <li><b>Client</b> - {{ car.client }}</li>
+    <li><b>Car number</b> - {{ car.plate_nr}}</li>
+    <li><b>VIN </b>- {{ car.vin }}</li>
+    <li><b>Engine </b>- {{ car.car_model.engine }} </li>
+    <li><b>Year</b> - {{ car.car_model.year }}</li>
+</ul>
+<p>{% if car.client == request.user %}
+    <a class="button" href="{% url 'user_car_update' car.pk %}">Update car</a>
+    {% endif %}</p>
 {% endblock content %}
